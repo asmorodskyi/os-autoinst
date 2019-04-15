@@ -835,7 +835,7 @@ sub wait_serial {
     $matched = $matched ? 'ok' : 'fail';
     # convert dos2unix (poo#20542)
     $ret->{string} =~ s,\r\n,\n,g;
-    $autotest::current_test->record_serialresult(bmwqemu::pp($regexp), $matched, $ret->{string});
+    $autotest::current_test->record_serialresult(bmwqemu::pp($regexp), $matched, $ret->{string}) unless is_serial_terminal;
     bmwqemu::fctres("$regexp: $matched");
     return $ret->{string} if ($matched eq "ok");
     return;    # false
