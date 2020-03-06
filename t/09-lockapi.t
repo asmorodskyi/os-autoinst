@@ -70,6 +70,12 @@ ok($@, 'missing lock name catched');
 eval { mutex_unlock; };
 ok($@, 'missing unlock name catched');
 
+#_try_lock
+$api_call_return = 200;
+ok(_try_lock('mutex', 'lock400', {action => 'lock'}), 'Attempt to lock');
+$api_call_return = 400;
+ok(_try_lock('mutex', 'lock400', {action => 'lock'}), 'Attempt to lock');
+
 # check successful ops
 $api_call_return = 200;
 ok(mutex_create('lock1'),                            'mutex created');

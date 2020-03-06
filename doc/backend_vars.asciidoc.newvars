@@ -1,0 +1,170 @@
+Supported variables per backend
+-------------------------------
+
+.AMT backend
+[grid="rows",format="csv"]
+[options="header",cols="^m,^m,^m,v",separator=";"]
+|====================
+Variable;Values allowed;Default value;Explanation
+AMT_HOSTNAME;string;;Hostname or IP of the target host
+AMT_PASSWORD;string;;Password for admin AMT user on target host
+|====================
+
+.COMMON backend
+[grid="rows",format="csv"]
+[options="header",cols="^m,^m,^m,v",separator=";"]
+|====================
+Variable;Values allowed;Default value;Explanation
+NOVIDEO;boolean;0;Do not encode video if set
+NO_DEBUG_IO;boolean;0;Disable the I/O debug output in case of needle comparison times longer than expected
+SCREENSHOTINTERVAL;float;0.5;The interval in seconds at which screenshots are taken internally
+SSH_CONNECT_RETRY;integer;5;Maximum retries to connect to SSH based console targets
+SSH_CONNECT_RETRY_INTERVAL;float;10;Interval in seconds between retries to connect to SSH based console targets. Related to SSH_CONNECT_RETRY
+_CHKSEL_RATE_HITS;integer;15000;The ammount of times, the select should return the same fileno during the _CHKSEL_RATE_WAIT_TIME seconds, to consider the VNC console unresponsive
+_CHKSEL_RATE_WAIT_TIME;integer;30;The ammount of time isotovideo is going to wait for the VNC console to become responsive
+|====================
+
+.IKVM backend
+[grid="rows",format="csv"]
+[options="header",cols="^m,^m,^m,v",separator=";"]
+|====================
+Variable;Values allowed;Default value;Explanation
+IPMI_HOSTNAME;;;
+IPMI_HW;;;
+IPMI_PASSWORD;;;
+IPMI_USER;;;
+|====================
+
+.IPMI backend
+[grid="rows",format="csv"]
+[options="header",cols="^m,^m,^m,v",separator=";"]
+|====================
+Variable;Values allowed;Default value;Explanation
+IPMI_BACKEND_MC_RESET;boolean;undef;Reset ipmi main board before test for sol console stability
+IPMI_DO_NOT_POWER_OFF;boolean;undef;Don't power off the machine after test;
+IPMI_HOSTNAME;string;Hostname/IP for IPMI interface;
+IPMI_HW;;;
+IPMI_PASSWORD;string;Password for the IPMI interface;
+IPMI_USER;string;Username for the IPMI interface;
+|====================
+
+.PVM backend
+[grid="rows",format="csv"]
+[options="header",cols="^m,^m,^m,v",separator=";"]
+|====================
+Variable;Values allowed;Default value;Explanation
+ARCH;;;
+CPUS;integer;1;Number of CPUS for LPAR
+HDDSIZEGB;integer;15;Disk size in GB
+HDD_$hdd_num;;;
+HDD_$i;;;
+ISO;;;
+LPAR;string;osauto;LPAR name to be created
+LPARID;;;
+MEM;integer;2048;amount of RAM
+NIC;;;
+NICVLAN;integer;1;VLAN to attach to
+NUMDISKS;integer;1;Number of disks
+VIOISO;;;
+VNC;;;
+VSWITCH;string;VSWITCH0;A virtula switch to connect to
+WORKER_ID;;;
+|====================
+
+.QEMU backend
+[grid="rows",format="csv"]
+[options="header",cols="^m,^m,^m,v",separator=";"]
+|====================
+Variable;Values allowed;Default value;Explanation
+ARCH;x86_64|i686|aarch64|...;depends on tested medium;Architecture of VM.
+BIOS;;;
+BOOTFROM;chars;undef;Influences order of boot devices. See qemu -boot option
+BOOT_HDD_IMAGE;boolean;;enables boot from HDD_1 (BOOTFROM has higher priority)
+BOOT_MENU;;;
+BOOT_MENU_TIMEOUT;integer;5000;boot menu timeout in ms. Needs BOOT_MENU
+CDMODEL;see qemu -device ?;undef;Storage device for virtualized CD
+DELAYED_START;boolean;;delay vm cpu start until resume_vm() is called
+HDDFORMAT;;;
+HDDMODEL;see qemu -device ?;virtio-blk;Storage device for virtualized HDD.
+HDDMODEL_$i;see qemu -device ?;virtio-blk;Storage device for virtualized HDD. Overrides global HDDMODEL for HDD_$i
+HDDSIZEGB;integer;10;Creates HDD with specified size in GiB
+KEEPHDDS;boolean;;Leave created HDD after test finishes. Useful for debugging tests
+LAPTOP;boolean or filename;0;If 1, loads Dell E6330 DMI. If filename, loads specified DMI
+MULTIPATH;boolean;0;Add HDD drives as multipath devices. Override HDDMODEL to virtio-scsi-pci
+NBF;boolean;0;open source network boot firmware e.g. to attach iscsi target on boot http://ipxe.org/
+NICMAC;any MAC address;52:54:00:12:34:56;MAC address to be assigned to virtual network card
+NICMODEL;see qemu -device ?;virtio-net;Network device virtual NIC.
+NICTYPE;user|tap|vde;user;Instruct QEMU to either use user networking or to connect virtual NIC to existin system TAP device
+NICTYPE_USER_OPTIONS;string;undef;Arbitrary options for NICTYPE
+NICVLAN;integer;undef;network (vlan) number to which the NIC should be connected, assigned by scheduler to jobs with NICTYPE != user
+NUMDISKS;integer;1;Number of disks to be created and attached to VM, can be 0 to disable disks
+OFFLINE_SUT;boolean;0;Disable network for a VM
+OFW;boolean;0;QEMU Open Firmware is in use
+OVS_DEBUG;;;
+PATHCNT;integer;2;Number of paths in MULTIPATH scenario
+PXEBOOT;boolean or 'once';0;Boot VM from network, on every boot or only once if set to 'once'
+QEMU;QEMU binary filename;undef;Filename of QEMU binary to use
+QEMUCPU;see qemu -cpu ?;undef;CPU to emulate
+QEMUCPUS;integer;1;Number of CPUs to assign to VM
+QEMUMACHINE;see qemu -machine ?;undef;Machine and chipset to emulate
+QEMURAM;integer;1024;Size of RAM of VM in MiB
+QEMUTHREADS;integer;0;Number of cpu threads used by VM
+QEMUVGA;see qemu -device ?;cirrus;VGA device to use with VM
+QEMU_APPEND;string;;Append parameters on qemu command line. The first item will have '-' prepended to it.
+QEMU_BALLOON_TARGET;integer;undef;The target guest RAM usage before a snapshot is taken. It is intended to speed up snapshots by forcing the guest to drop various caches. Setting this enables the virtio-balloon device which requires a kernel with a virtio-balloon driver. Setting this far below the RAM required by the guest will probably cause the guest to panic or deadlock. However it should be able to cope with it being set slightly below what is needed.
+QEMU_COMPRESS_LEVEL;integer;6;Sets the compression level used for memory dumps and snapshots. Zero turns compression off and 9 is the maximum level. Generally there is little improvement in compression ratio by increasing the level, but the CPU time can be high on some platforms.
+QEMU_COMPRESS_QCOW2;boolean;1;compress qcow2 images intended for upload
+QEMU_COMPRESS_THREADS;integer;QEMUCPUS;Number of threads used for compressing memory dumps and snapshots.
+QEMU_DISABLE_SNAPSHOTS;boolean;undef;If set, disable snapshots in case the worker has slow disks to avoid save_vm calls failing due to timeouts (See https://bugzilla.suse.com/show_bug.cgi?id=1035453[bsc#1035453])
+QEMU_DUMP_COMPRESS_METHOD;string;xz;The compression to use during a memory dump. Can be set to xz, bzip2 or internal (QEMU's internal compression, not compatible with crash or gdb). If xz is set, but not available, it will fallback to bzip2. Also see QEMU_COMPRESSION_LEVEL.
+QEMU_HUGE_PAGES_PATH;string;undef;Define a path to use huge pages (e.g. /dev/hugepages/)
+QEMU_MAX_BANDWIDTH;integer;INT_MAX;Limits the transfer rate during a snapshot.
+QEMU_MAX_MIGRATION_TIME;integer;240;Maximum time in seconds a migration to file may take for example for snapshot creation before being forcefully aborted.
+QEMU_NO_FDC_SET;boolean;0;Don't disable the floppy drive.
+QEMU_NO_KVM;boolean;0;Don't use KVM acceleration.
+QEMU_NO_TABLET;boolean;0;Don't use USB tablet.
+QEMU_NUMA;boolean;0;Enable NUMA simulation, requires QEMUCPUS to be greater than one
+QEMU_ONLY_EXEC;boolean;undef;If set, only execute the qemu process but return early before connecting to the process. This can be helpful for cutting testing time or to connect to the qemu process manually.
+QEMU_OVERRIDE_VIDEO_DEVICE_AARCH64;boolean;undef;If set, for aarch64 systems use VGA as video adapter
+QEMU_SMBIOS;see qemu -smbios ?;undef;pass this value to qemu -smbios
+QEMU_SOUNDHW;see qemu -soundhw ?;hda;pass this value to qemu -soundhw
+QEMU_VIRTIO_RNG;boolean;0;Enable virtio random number generator
+RAIDLEVEL;;;
+SKIPTO;full name of test module;;Restore VM from snapshot and continue by running specified test module. Needs HDD image with snapshots present
+TAPDEV;device name;undef;TAP device name to which virtual NIC should be connected. Usually undef so automatic matching is used
+TAPDOWNSCRIPT;;;
+TAPSCRIPT;;;
+UEFI;boolean;0;Enable UEFI
+UEFI_BIOS;;;Deprecated, use UEFI_PFLASH_CODE
+UEFI_PFLASH;boolean;0;(Deprecated, use UEFI_PFLASH_VARS) Enable the pflash mode to write the UEFI variables directly into the firmware file instead of NVvars in the EFI system partition
+UEFI_PFLASH_CODE;string;;Specify the file name of the UEFI firmware code which will be loaded onto a read-only PFLASH drive
+UEFI_PFLASH_VARS;string;;Specify the file name which contains the UEFI firmware variables which will be loaded onto a mutable PFLASH drive
+VDE_PORT;integer;worker instance + 10;number of vde switch port to connect
+VDE_SOCKETDIR;string;.;directory where vde_switch control socket is to be found
+VDE_USE_SLIRP;integer;1;whether to start slirpvde
+VIRTIO_CONSOLE;boolean;1;Enable/disable virtio console. (@see `-device virtconsole` qemu option)
+VIRTIO_CONSOLE_NUM;integer;1;Number of virtio consoles.
+VNC;integer;worker instance + 90;Display on which VNC server is running. Actual port is 5900 + VNC
+VNCKB;;;
+WORKER_CLASS;;;
+WORKER_HOSTNAME;;;
+|====================
+
+.SVIRT backend
+[grid="rows",format="csv"]
+[options="header",cols="^m,^m,^m,v",separator=";"]
+|====================
+Variable;Values allowed;Default value;Explanation
+NUMDISKS;;;
+RAIDLEVEL;;;
+|====================
+
+.VIRT backend
+[grid="rows",format="csv"]
+[options="header",cols="^m,^m,^m,v",separator=";"]
+|====================
+Variable;Values allowed;Default value;Explanation
+QEMUCPUS;;;
+QEMURAM;;;
+|====================
+
